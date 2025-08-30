@@ -1,0 +1,58 @@
+{
+  "success_rate": 0.0,
+  "total_models": 9,
+  "successful_models": 0,
+  "results_by_vocab_size": {
+    "13": {
+      "scaled_linear_sgd_FullBatch": {
+        "accuracy": 0.058823529411764705,
+        "epochs": 62,
+        "saved": false
+      },
+      "scaled_linear_adam_SmallBatch": {
+        "accuracy": 0.08823529411764706,
+        "epochs": 52,
+        "saved": false
+      },
+      "scaled_mlp_adamw_MediumBatch": {
+        "accuracy": 0.08823529411764706,
+        "epochs": 51,
+        "saved": false
+      }
+    },
+    "17": {
+      "scaled_linear_sgd_FullBatch": {
+        "accuracy": 0.034482758620689655,
+        "epochs": 51,
+        "saved": false
+      },
+      "scaled_linear_adam_SmallBatch": {
+        "accuracy": 0.034482758620689655,
+        "epochs": 51,
+        "saved": false
+      },
+      "scaled_mlp_adamw_MediumBatch": {
+        "accuracy": 0.06896551724137931,
+        "epochs": 54,
+        "saved": false
+      }
+    },
+    "23": {
+      "scaled_linear_sgd_FullBatch": {
+        "accuracy": 0.05660377358490566,
+        "epochs": 51,
+        "saved": false
+      },
+      "scaled_linear_adam_SmallBatch": {
+        "accuracy": 0.03773584905660377,
+        "epochs": 51,
+        "saved": false
+      },
+      "scaled_mlp_adamw_MediumBatch": {
+        "accuracy": 0.04716981132075472,
+        "epochs": 53,
+        "saved": false
+      }
+    }
+  }
+}

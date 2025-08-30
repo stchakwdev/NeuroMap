@@ -1,0 +1,50 @@
+Modular Arithmetic Dataset Summary
+==================================
+
+Basic Information:
+  Prime modulus (p): 17
+  Representation: embedding
+  Total examples: 289
+  Input shape: torch.Size([289, 2])
+  Target shape: torch.Size([289])
+
+Consistency Checks:
+  correct_example_count: PASS
+  no_duplicate_pairs: PASS
+  correct_targets: PASS
+  correct_input_shape: PASS
+  correct_target_shape: PASS
+  metadata_adjacency_count: PASS
+
+Algebraic Properties:
+  Commutative: True
+  Has identity: True
+  All have inverses: True
+
+Structural Metadata:
+  Adjacent pairs: 17
+  Commutative pairs: 136
+  Identity pairs: 17
+  Inverse pairs: 8
+
+Sample Examples:
+   0 +  0 =  0 (mod 17)
+   0 +  1 =  1 (mod 17)
+   0 +  2 =  2 (mod 17)
+   0 +  3 =  3 (mod 17)
+   0 +  4 =  4 (mod 17)
+   0 +  5 =  5 (mod 17)
+   0 +  6 =  6 (mod 17)
+   0 +  7 =  7 (mod 17)
+   0 +  8 =  8 (mod 17)
+   0 +  9 =  9 (mod 17)
+   0 + 10 = 10 (mod 17)
+   0 + 11 = 11 (mod 17)
+   0 + 12 = 12 (mod 17)
+   0 + 13 = 13 (mod 17)
+   0 + 14 = 14 (mod 17)
+   0 + 15 = 15 (mod 17)
+   0 + 16 = 16 (mod 17)
+   1 +  0 =  1 (mod 17)
+   1 +  1 =  2 (mod 17)
+   1 +  2 =  3 (mod 17)

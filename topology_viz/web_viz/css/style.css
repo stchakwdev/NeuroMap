@@ -1,0 +1,481 @@
+/* Neural Topology Visualization - Custom Styles */
+
+/* === Global Styles === */
+:root {
+    --primary-color: #0066cc;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --dark-bg: #212529;
+    --light-bg: #f8f9fa;
+    --border-color: #dee2e6;
+    --text-muted: #6c757d;
+    --sidebar-width: 300px;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main-content {
+    padding-top: 56px; /* Account for fixed navbar */
+    height: 100vh;
+}
+
+/* === Navbar Styles === */
+.navbar-brand i {
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+.nav-link {
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-color) !important;
+}
+
+.nav-link.active {
+    color: var(--primary-color) !important;
+    font-weight: 500;
+}
+
+/* === Layout Components === */
+.sidebar {
+    background-color: var(--light-bg);
+    border-right: 1px solid var(--border-color);
+    padding: 20px 15px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* === Visualization Container === */
+.visualization-container {
+    padding: 15px;
+    height: calc(100vh - 56px);
+    overflow: hidden;
+}
+
+.viz-panel {
+    height: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.viz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--light-bg);
+}
+
+.viz-header h4 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--dark-bg);
+}
+
+.viz-controls {
+    display: flex;
+    gap: 10px;
+}
+
+/* === Visualization Canvas === */
+.visualization-canvas {
+    position: relative;
+    height: calc(100% - 70px); /* Account for header */
+    width: 100%;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    overflow: hidden;
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.viz-overlay {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    max-width: 300px;
+    z-index: 100;
+}
+
+.node-info {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+}
+
+.node-info h6 {
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* === Controls Panel === */
+.controls-panel {
+    height: 100%;
+}
+
+.control-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.control-section:last-child {
+    border-bottom: none;
+}
+
+.control-section h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--dark-bg);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.control-section h5 i {
+    margin-right: 8px;
+    color: var(--primary-color);
+    width: 16px;
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--dark-bg);
+    font-size: 0.9rem;
+}
+
+.form-select, .form-control {
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.form-select:focus, .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.25);
+}
+
+.form-check-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.btn-sm {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+}
+
+/* === Metrics Panel === */
+.metrics-panel {
+    height: 100%;
+}
+
+.metric-section {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.metric-section:last-child {
+    border-bottom: none;
+}
+
+.metric-section h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--dark-bg);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.metric-section h5 i {
+    margin-right: 8px;
+    color: var(--primary-color);
+    width: 16px;
+}
+
+/* === Metric Items === */
+.metric-item {
+    margin-bottom: 15px;
+}
+
+.metric-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.metric-value {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark-bg);
+    margin-bottom: 6px;
+}
+
+.metric-bar {
+    height: 6px;
+    background-color: var(--border-color);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.metric-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--danger-color) 0%, var(--warning-color) 50%, var(--success-color) 100%);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+/* === Graph Statistics === */
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--dark-bg);
+}
+
+/* === Quality Assessment === */
+.quality-badge {
+    text-align: center;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.quality-excellent {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+}
+
+.quality-good {
+    background: linear-gradient(135deg, #17a2b8, #28a745);
+    color: white;
+}
+
+.quality-fair {
+    background: linear-gradient(135deg, #ffc107, #fd7e14);
+    color: white;
+}
+
+.quality-poor {
+    background: linear-gradient(135deg, #dc3545, #e83e8c);
+    color: white;
+}
+
+.recommendations {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.recommendations ul {
+    padding-left: 16px;
+    margin-bottom: 0;
+}
+
+.recommendations li {
+    margin-bottom: 4px;
+}
+
+/* === Comparison Modal === */
+.comparison-viz {
+    height: 400px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--light-bg);
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+    .main-content .col-md-3 {
+        display: none; /* Hide sidebars on mobile */
+    }
+    
+    .main-content .col-md-6 {
+        flex: 1;
+        max-width: 100%;
+    }
+    
+    .viz-header h4 {
+        font-size: 1rem;
+    }
+    
+    .viz-controls {
+        display: none; /* Hide some controls on mobile */
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-nav .nav-item {
+        text-align: center;
+    }
+    
+    .viz-panel {
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+}
+
+/* === Animation Classes === */
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.slide-up {
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* === Utility Classes === */
+.text-primary { color: var(--primary-color) !important; }
+.bg-light-custom { background-color: var(--light-bg) !important; }
+.border-custom { border-color: var(--border-color) !important; }
+
+/* === Interactive Elements === */
+.btn:hover {
+    transform: translateY(-1px);
+    transition: transform 0.2s ease;
+}
+
+.form-select:hover,
+.form-control:hover {
+    border-color: var(--primary-color);
+    transition: border-color 0.2s ease;
+}
+
+/* === Three.js Canvas Styles === */
+canvas {
+    display: block;
+    outline: none;
+    cursor: grab;
+}
+
+canvas:active {
+    cursor: grabbing;
+}
+
+/* === Loading States === */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* === Tooltip Styles === */
+.tooltip-custom {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    pointer-events: none;
+    z-index: 1000;
+    white-space: nowrap;
+}
+
+/* === Error States === */
+.error-message {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 20px;
+    text-align: center;
+}
+
+.success-message {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 20px;
+    text-align: center;
+}

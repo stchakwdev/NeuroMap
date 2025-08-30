@@ -1,0 +1,53 @@
+{
+  "total_models": 6,
+  "successful_models": 2,
+  "excellent_models": 2,
+  "success_rate": 0.3333333333333333,
+  "excellent_rate": 0.3333333333333333,
+  "results_by_vocab_size": {
+    "13": {
+      "DirectLookup_Adam": {
+        "accuracy": 1.0,
+        "epochs": 1,
+        "time": 0.11319613456726074,
+        "saved": true,
+        "error": null
+      },
+      "MemoryAugmented_Adam": {
+        "accuracy": 0.23529411764705882,
+        "epochs": 162,
+        "time": 1.4400811195373535,
+        "saved": false,
+        "error": null
+      },
+      "HybridMemory_AdamW": {
+        "accuracy": 1.0,
+        "epochs": 5,
+        "time": 0.0794820785522461,
+        "saved": true,
+        "error": null
+      },
+      "CyclicBasic_Adam": {
+        "accuracy": 0.6470588235294118,
+        "epochs": 200,
+        "time": 2.0221900939941406,
+        "saved": false,
+        "error": null
+      },
+      "CyclicEnhanced_AdamW": {
+        "accuracy": 0.35294117647058826,
+        "epochs": 200,
+        "time": 5.749991178512573,
+        "saved": false,
+        "error": null
+      },
+      "CyclicResidual_Adam": {
+        "accuracy": 0.8235294117647058,
+        "epochs": 200,
+        "time": 1.30308198928833,
+        "saved": false,
+        "error": null
+      }
+    }
+  }
+}

@@ -1,0 +1,100 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyTorch model files (exclude large checkpoints, keep successful models)
+*.pth
+*.pt
+!models/successful/*.pt
+!models/successful/*.pth
+
+# Data and results (keep essential metadata only)
+data/raw/
+data/processed/
+results/raw/
+results/temp/
+test_output/
+*.log
+
+# Internal documentation and tracking
+CLAUDE.md
+.claude/
+*_analysis_report.md
+*_SUMMARY.md
+STATUS.md
+neural-topology-viz-plan.md
+neural_topology_research_plan.md
+breakthrough_analysis_report.md
+scaling_analysis_report.md
+FINAL_SUMMARY.md
+PHASE_*_SUMMARY.md
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Visualization cache
+topology_viz/backend/data/raw_topology_data.json
+topology_viz/backend/data/test_topology_data.json
+
+# Large generated datasets (keep metadata only)
+Dataset/data/*.npy
+Dataset/data/*.pkl
+Dataset/modular_arithmetic_dataset/data/*.npy
+Dataset/modular_arithmetic_dataset/data/*.pkl
+
+# Experimental and research files
+experiments/
+research_notes/
+analysis_cache/
+
+# Wandb logs
+wandb/

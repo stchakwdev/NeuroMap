@@ -1,0 +1,48 @@
+{
+  "mod_17": {
+    "p": 17,
+    "total_examples": 289,
+    "angular_resolution_degrees": 21.176470588235293,
+    "max_circular_distance": 8,
+    "adjacent_pairs": 17,
+    "commutative_pairs": 136,
+    "identity_pairs": 17,
+    "inverse_pairs": 8,
+    "distance_correlation": 0.9791877337691776,
+    "distance_pairs_analyzed": 136,
+    "mean_adjacent_distance": 0.36722886188388437,
+    "mean_non_adjacent_distance": 1.4833124037049397,
+    "distance_separation_ratio": 4.039204315520152,
+    "validation_time_seconds": 0.00557398796081543,
+    "validation_score": 1.0,
+    "validation_quality": "Excellent - Clear circular structure",
+    "dataset_size_mb": 0.00661468505859375
+  },
+  "mod_23": {
+    "p": 23,
+    "total_examples": 529,
+    "angular_resolution_degrees": 15.652173913043478,
+    "max_circular_distance": 11,
+    "adjacent_pairs": 23,
+    "commutative_pairs": 253,
+    "identity_pairs": 23,
+    "inverse_pairs": 11,
+    "distance_correlation": 0.9788363682563613,
+    "distance_pairs_analyzed": 253,
+    "mean_adjacent_distance": 0.27225448886576326,
+    "mean_non_adjacent_distance": 1.4317477977794149,
+    "distance_separation_ratio": 5.258858370872801,
+    "validation_time_seconds": 0.008811473846435547,
+    "validation_score": 1.0,
+    "validation_quality": "Excellent - Clear circular structure",
+    "dataset_size_mb": 0.01210784912109375
+  },
+  "relative_differences": {
+    "examples_increase_percent": 83.04498269896193,
+    "resolution_improvement_percent": 26.08695652173913,
+    "correlation_improvement": -0.0003513655128162263,
+    "separation_improvement": 1.219654055352649,
+    "validation_time_ratio": 1.5808203943710166,
+    "memory_ratio": 1.8304498269896194
+  }
+}

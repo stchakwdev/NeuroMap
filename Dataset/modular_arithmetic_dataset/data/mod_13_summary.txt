@@ -1,0 +1,50 @@
+Modular Arithmetic Dataset Summary
+==================================
+
+Basic Information:
+  Prime modulus (p): 13
+  Representation: embedding
+  Total examples: 169
+  Input shape: torch.Size([169, 2])
+  Target shape: torch.Size([169])
+
+Consistency Checks:
+  correct_example_count: PASS
+  no_duplicate_pairs: PASS
+  correct_targets: PASS
+  correct_input_shape: PASS
+  correct_target_shape: PASS
+  metadata_adjacency_count: PASS
+
+Algebraic Properties:
+  Commutative: True
+  Has identity: True
+  All have inverses: True
+
+Structural Metadata:
+  Adjacent pairs: 13
+  Commutative pairs: 78
+  Identity pairs: 13
+  Inverse pairs: 6
+
+Sample Examples:
+   0 +  0 =  0 (mod 13)
+   0 +  1 =  1 (mod 13)
+   0 +  2 =  2 (mod 13)
+   0 +  3 =  3 (mod 13)
+   0 +  4 =  4 (mod 13)
+   0 +  5 =  5 (mod 13)
+   0 +  6 =  6 (mod 13)
+   0 +  7 =  7 (mod 13)
+   0 +  8 =  8 (mod 13)
+   0 +  9 =  9 (mod 13)
+   0 + 10 = 10 (mod 13)
+   0 + 11 = 11 (mod 13)
+   0 + 12 = 12 (mod 13)
+   1 +  0 =  1 (mod 13)
+   1 +  1 =  2 (mod 13)
+   1 +  2 =  3 (mod 13)
+   1 +  3 =  4 (mod 13)
+   1 +  4 =  5 (mod 13)
+   1 +  5 =  6 (mod 13)
+   1 +  6 =  7 (mod 13)

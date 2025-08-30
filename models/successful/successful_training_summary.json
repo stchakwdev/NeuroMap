@@ -1,0 +1,54 @@
+{
+  "approach": "successful_memory_models",
+  "tested_vocab_sizes": [
+    17,
+    23
+  ],
+  "total_models": 4,
+  "perfect_models": 4,
+  "successful_models": 4,
+  "perfect_rate": 1.0,
+  "success_rate": 1.0,
+  "results_by_vocab_size": {
+    "17": {
+      "DirectLookup_Adam": {
+        "accuracy": 1.0,
+        "test_accuracy": 1.0,
+        "epochs": 3,
+        "time": 0.04313015937805176,
+        "parameters": 4913,
+        "saved": true,
+        "error": null
+      },
+      "HybridMemory_AdamW": {
+        "accuracy": 1.0,
+        "test_accuracy": 1.0,
+        "epochs": 2,
+        "time": 0.07196283340454102,
+        "parameters": 6755,
+        "saved": true,
+        "error": null
+      }
+    },
+    "23": {
+      "DirectLookup_Adam": {
+        "accuracy": 1.0,
+        "test_accuracy": 1.0,
+        "epochs": 3,
+        "time": 0.040270090103149414,
+        "parameters": 12167,
+        "saved": true,
+        "error": null
+      },
+      "HybridMemory_AdamW": {
+        "accuracy": 1.0,
+        "test_accuracy": 0.9981096386909485,
+        "epochs": 7,
+        "time": 0.43269920349121094,
+        "parameters": 14207,
+        "saved": true,
+        "error": null
+      }
+    }
+  }
+}

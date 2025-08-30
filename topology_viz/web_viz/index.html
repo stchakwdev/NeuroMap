@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Topology Visualization - Interactive Explorer</title>
+    
+    <!-- External Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><i class="fas fa-project-diagram"></i> Neural Topology Explorer</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="single-view-tab" href="#"><i class="fas fa-eye"></i> Single View</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="comparison-view-tab" href="#"><i class="fas fa-columns"></i> Comparison</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="evolution-view-tab" href="#"><i class="fas fa-history"></i> Evolution</a>
+                    </li>
+                </ul>
+                
+                <div class="navbar-nav">
+                    <div class="nav-item">
+                        <button class="btn btn-outline-light btn-sm" id="fullscreen-btn">
+                            <i class="fas fa-expand"></i> Fullscreen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid main-content">
+        <div class="row h-100">
+            <!-- Left Sidebar - Controls -->
+            <div class="col-md-3 sidebar">
+                <div class="controls-panel">
+                    <!-- Model Selection -->
+                    <div class="control-section">
+                        <h5><i class="fas fa-brain"></i> Model Selection</h5>
+                        <div class="mb-3">
+                            <label for="model-select" class="form-label">Choose Model:</label>
+                            <select class="form-select" id="model-select">
+                                <option value="">Loading models...</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="architecture-filter" class="form-label">Filter by Architecture:</label>
+                            <select class="form-select" id="architecture-filter">
+                                <option value="">All Architectures</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="modulus-filter" class="form-label">Filter by Modulus (p):</label>
+                            <select class="form-select" id="modulus-filter">
+                                <option value="">All Moduli</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Visualization Controls -->
+                    <div class="control-section">
+                        <h5><i class="fas fa-cogs"></i> Visualization</h5>
+                        
+                        <div class="mb-3">
+                            <label for="reduction-method" class="form-label">Dimension Reduction:</label>
+                            <select class="form-select" id="reduction-method">
+                                <option value="pca">PCA</option>
+                                <option value="tsne">t-SNE</option>
+                                <option value="umap">UMAP</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="connection-method" class="form-label">Graph Connections:</label>
+                            <select class="form-select" id="connection-method">
+                                <option value="modular">Modular Structure</option>
+                                <option value="similarity">Embedding Similarity</option>
+                                <option value="hybrid">Hybrid</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="layout-method" class="form-label">Layout Algorithm:</label>
+                            <select class="form-select" id="layout-method">
+                                <option value="learned_2d">Learned (2D)</option>
+                                <option value="learned_3d">Learned (3D)</option>
+                                <option value="circular_2d">Expected Circular</option>
+                                <option value="force_2d">Force-Directed</option>
+                                <option value="spectral_2d">Spectral</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="show-edges" checked>
+                                <label class="form-check-label" for="show-edges">Show Connections</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="show-labels" checked>
+                                <label class="form-check-label" for="show-labels">Show Node Labels</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Animation Controls -->
+                    <div class="control-section">
+                        <h5><i class="fas fa-play"></i> Animation</h5>
+                        <div class="mb-3">
+                            <button class="btn btn-primary btn-sm" id="animate-layout">
+                                <i class="fas fa-play"></i> Animate Layout Transition
+                            </button>
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-secondary btn-sm" id="reset-camera">
+                                <i class="fas fa-home"></i> Reset Camera
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center - Main Visualization -->
+            <div class="col-md-6 visualization-container">
+                <div class="viz-panel">
+                    <div class="viz-header">
+                        <h4 id="current-model-title">Select a model to visualize</h4>
+                        <div class="viz-controls">
+                            <button class="btn btn-sm btn-outline-primary" id="screenshot-btn">
+                                <i class="fas fa-camera"></i> Screenshot
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Loading indicator -->
+                    <div id="loading-indicator" class="loading-container">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Loading visualization data...</p>
+                    </div>
+                    
+                    <!-- Main 3D/2D visualization canvas -->
+                    <div id="main-visualization" class="visualization-canvas"></div>
+                    
+                    <!-- Visualization info overlay -->
+                    <div id="viz-info" class="viz-overlay">
+                        <div class="info-content">
+                            <div id="node-info" class="node-info" style="display: none;">
+                                <h6>Node Information</h6>
+                                <div id="node-details"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar - Metrics Dashboard -->
+            <div class="col-md-3 sidebar">
+                <div class="metrics-panel">
+                    <!-- Model Information -->
+                    <div class="metric-section">
+                        <h5><i class="fas fa-info-circle"></i> Model Info</h5>
+                        <div id="model-info" class="metric-content">
+                            <p class="text-muted">Select a model to view information</p>
+                        </div>
+                    </div>
+
+                    <!-- Topology Metrics -->
+                    <div class="metric-section">
+                        <h5><i class="fas fa-chart-line"></i> Topology Metrics</h5>
+                        <div id="topology-metrics" class="metric-content">
+                            <div class="metric-item">
+                                <span class="metric-label">Circular Structure Score:</span>
+                                <span id="circular-score" class="metric-value">-</span>
+                                <div id="circular-score-bar" class="metric-bar">
+                                    <div class="metric-bar-fill"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="metric-item">
+                                <span class="metric-label">Silhouette Score:</span>
+                                <span id="silhouette-score" class="metric-value">-</span>
+                                <div id="silhouette-score-bar" class="metric-bar">
+                                    <div class="metric-bar-fill"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="metric-item">
+                                <span class="metric-label">Model Accuracy:</span>
+                                <span id="model-accuracy" class="metric-value">-</span>
+                                <div id="accuracy-bar" class="metric-bar">
+                                    <div class="metric-bar-fill"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Graph Statistics -->
+                    <div class="metric-section">
+                        <h5><i class="fas fa-project-diagram"></i> Graph Stats</h5>
+                        <div id="graph-stats" class="metric-content">
+                            <div class="stat-row">
+                                <span class="stat-label">Nodes:</span>
+                                <span id="num-nodes" class="stat-value">-</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Edges:</span>
+                                <span id="num-edges" class="stat-value">-</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Density:</span>
+                                <span id="graph-density" class="stat-value">-</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Connected:</span>
+                                <span id="is-connected" class="stat-value">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quality Assessment -->
+                    <div class="metric-section">
+                        <h5><i class="fas fa-medal"></i> Quality Assessment</h5>
+                        <div id="quality-assessment" class="metric-content">
+                            <div id="quality-badge" class="quality-badge">
+                                <span id="quality-text">No model selected</span>
+                            </div>
+                            <div id="quality-recommendations" class="recommendations">
+                                <p class="text-muted">Select a model to see quality assessment</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison Modal (for comparison view) -->
+    <div class="modal fade" id="comparison-modal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Model Comparison</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Model A</h6>
+                            <select class="form-select mb-2" id="comparison-model-a">
+                                <option value="">Select Model A</option>
+                            </select>
+                            <div id="comparison-viz-a" class="comparison-viz"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Model B</h6>
+                            <select class="form-select mb-2" id="comparison-model-b">
+                                <option value="">Select Model B</option>
+                            </select>
+                            <div id="comparison-viz-b" class="comparison-viz"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal fade" id="help-modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-question-circle"></i> Help & Usage Guide</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Interactive Controls</h6>
+                    <ul>
+                        <li><strong>Left Click + Drag:</strong> Rotate view (3D) / Pan (2D)</li>
+                        <li><strong>Right Click + Drag:</strong> Pan view</li>
+                        <li><strong>Mouse Wheel:</strong> Zoom in/out</li>
+                        <li><strong>Click Node:</strong> View detailed information</li>
+                    </ul>
+                    
+                    <h6>Visualization Methods</h6>
+                    <ul>
+                        <li><strong>PCA:</strong> Linear dimensionality reduction</li>
+                        <li><strong>t-SNE:</strong> Nonlinear, preserves local structure</li>
+                        <li><strong>UMAP:</strong> Uniform manifold approximation</li>
+                    </ul>
+                    
+                    <h6>Graph Connections</h6>
+                    <ul>
+                        <li><strong>Modular:</strong> Based on modular arithmetic relationships</li>
+                        <li><strong>Similarity:</strong> Based on embedding similarity</li>
+                        <li><strong>Hybrid:</strong> Combination of both approaches</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/utils.js"></script>
+    <script src="js/topology_viewer.js"></script>
+    <script src="js/comparison_mode.js"></script>
+    <script src="js/metrics_dashboard.js"></script>
+    <script src="js/app.js"></script>
+    
+    <!-- Application Initialization -->
+    <script>
+        // Initialize the application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Neural Topology Visualization starting...');
+            
+            // Initialize main components
+            const topologyViewer = new TopologyViewer('main-visualization');
+            const metricsDashboard = new MetricsDashboard();
+            const comparisonMode = new ComparisonMode();
+            
+            // Global app state
+            window.NeuralTopologyApp = {
+                topologyViewer: topologyViewer,
+                metricsDashboard: metricsDashboard,
+                comparisonMode: comparisonMode,
+                currentModel: null,
+                models: null
+            };
+            
+            // Load initial data
+            loadModelsData();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            console.log('✅ Neural Topology Visualization initialized!');
+        });
+        
+        // Main application functions
+        async function loadModelsData() {
+            try {
+                showLoading(true);
+                const response = await fetch('data/models.json');
+                const data = await response.json();
+                
+                window.NeuralTopologyApp.models = data;
+                populateModelSelectors(data);
+                showLoading(false);
+                
+                console.log('📊 Loaded data for', Object.keys(data.models).length, 'models');
+            } catch (error) {
+                console.error('❌ Failed to load models data:', error);
+                showError('Failed to load model data. Please ensure the data files are generated.');
+            }
+        }
+        
+        function populateModelSelectors(data) {
+            const modelSelect = document.getElementById('model-select');
+            const architectureFilter = document.getElementById('architecture-filter');
+            const modulusFilter = document.getElementById('modulus-filter');
+            
+            // Clear existing options
+            modelSelect.innerHTML = '<option value="">Choose a model...</option>';
+            architectureFilter.innerHTML = '<option value="">All Architectures</option>';
+            modulusFilter.innerHTML = '<option value="">All Moduli</option>';
+            
+            // Populate model list
+            Object.keys(data.models).forEach(modelName => {
+                const modelData = data.models[modelName];
+                if (modelData.error) return; // Skip failed models
+                
+                const option = document.createElement('option');
+                option.value = modelName;
+                option.textContent = `${modelName} (p=${modelData.model_info.p}, acc=${(modelData.model_info.accuracy * 100).toFixed(1)}%)`;
+                modelSelect.appendChild(option);
+            });
+            
+            // Populate filters
+            if (data.comparative_analysis) {
+                // Architecture filter
+                if (data.comparative_analysis.by_architecture) {
+                    Object.keys(data.comparative_analysis.by_architecture).forEach(arch => {
+                        const option = document.createElement('option');
+                        option.value = arch;
+                        option.textContent = arch;
+                        architectureFilter.appendChild(option);
+                    });
+                }
+                
+                // Modulus filter
+                if (data.comparative_analysis.by_modulus) {
+                    Object.keys(data.comparative_analysis.by_modulus).sort((a, b) => parseInt(a) - parseInt(b)).forEach(p => {
+                        const option = document.createElement('option');
+                        option.value = p;
+                        option.textContent = `p = ${p}`;
+                        modulusFilter.appendChild(option);
+                    });
+                }
+            }
+        }
+        
+        function setupEventListeners() {
+            // Model selection
+            document.getElementById('model-select').addEventListener('change', function() {
+                const modelName = this.value;
+                if (modelName) {
+                    selectModel(modelName);
+                }
+            });
+            
+            // Visualization controls
+            ['reduction-method', 'connection-method', 'layout-method'].forEach(id => {
+                document.getElementById(id).addEventListener('change', updateVisualization);
+            });
+            
+            // Toggle controls
+            document.getElementById('show-edges').addEventListener('change', updateVisualization);
+            document.getElementById('show-labels').addEventListener('change', updateVisualization);
+            
+            // Action buttons
+            document.getElementById('animate-layout').addEventListener('click', animateLayoutTransition);
+            document.getElementById('reset-camera').addEventListener('click', resetCamera);
+            document.getElementById('screenshot-btn').addEventListener('click', takeScreenshot);
+            document.getElementById('fullscreen-btn').addEventListener('click', toggleFullscreen);
+            
+            // Navigation tabs
+            document.getElementById('comparison-view-tab').addEventListener('click', function() {
+                new bootstrap.Modal(document.getElementById('comparison-modal')).show();
+            });
+        }
+        
+        function selectModel(modelName) {
+            const modelData = window.NeuralTopologyApp.models.models[modelName];
+            if (!modelData || modelData.error) {
+                showError(`Failed to load model: ${modelName}`);
+                return;
+            }
+            
+            console.log('🔍 Selected model:', modelName);
+            window.NeuralTopologyApp.currentModel = modelData;
+            
+            // Update UI
+            document.getElementById('current-model-title').textContent = 
+                `${modelName} (${modelData.model_info.architecture})`;
+            
+            // Update metrics dashboard
+            window.NeuralTopologyApp.metricsDashboard.updateMetrics(modelData);
+            
+            // Update visualization
+            updateVisualization();
+        }
+        
+        function updateVisualization() {
+            const currentModel = window.NeuralTopologyApp.currentModel;
+            if (!currentModel) return;
+            
+            const reductionMethod = document.getElementById('reduction-method').value;
+            const connectionMethod = document.getElementById('connection-method').value;
+            const layoutMethod = document.getElementById('layout-method').value;
+            const showEdges = document.getElementById('show-edges').checked;
+            const showLabels = document.getElementById('show-labels').checked;
+            
+            const vizKey = `${reductionMethod}_${connectionMethod}`;
+            const visualization = currentModel.visualizations[vizKey];
+            
+            if (!visualization) {
+                showError(`Visualization not available: ${vizKey}`);
+                return;
+            }
+            
+            // Update topology viewer
+            window.NeuralTopologyApp.topologyViewer.loadVisualization(visualization, {
+                layout: layoutMethod,
+                showEdges: showEdges,
+                showLabels: showLabels
+            });
+        }
+        
+        function animateLayoutTransition() {
+            window.NeuralTopologyApp.topologyViewer.animateLayoutTransition();
+        }
+        
+        function resetCamera() {
+            window.NeuralTopologyApp.topologyViewer.resetCamera();
+        }
+        
+        function takeScreenshot() {
+            window.NeuralTopologyApp.topologyViewer.takeScreenshot();
+        }
+        
+        function toggleFullscreen() {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                document.documentElement.requestFullscreen();
+            }
+        }
+        
+        function showLoading(show) {
+            document.getElementById('loading-indicator').style.display = show ? 'flex' : 'none';
+            document.getElementById('main-visualization').style.display = show ? 'none' : 'block';
+        }
+        
+        function showError(message) {
+            console.error('❌', message);
+            // You could implement a toast notification system here
+            alert('Error: ' + message);
+        }
+    </script>
+</body>
+</html>

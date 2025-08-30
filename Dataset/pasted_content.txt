@@ -1,0 +1,391 @@
+        """Test different input representations."""
+        
+        # Test one-hot representation
+        onehot_dataset = ModularArithmeticDataset(p=self.test_p, representation='one_hot')
+        expected_shape = (self.test_p * self.test_p, 2, self.test_p)
+        self.assertEqual(onehot_dataset.data['inputs'].shape, expected_shape)
+        
+        # Test integer representation  
+        int_dataset = ModularArithmeticDataset(p=self.test_p, representation='integer')
+        expected_shape = (self.test_p * self.test_p, 2)
+        self.assertEqual(int_dataset.data['inputs'].shape, expected_shape)
+    
+    def test_metadata_generation(self):
+        """Test that structural metadata is generated correctly."""
+        
+        metadata = self.dataset.metadata
+        
+        # Test adjacency pairs
+        adjacency_pairs = metadata['circular_structure']['adjacency_pairs']
+        self.assertEqual(len(adjacency_pairs), self.test_p)
+        
+        # Check that each number has exactly one next neighbor
+        firsts = [pair[0] for pair in adjacency_pairs]
+        self.assertEqual(set(firsts), set(range(self.test_p)))
+        
+        # Test commutative pairs
+        commutative_pairs = metadata['algebraic_properties']['commutative_pairs']
+        expected_commutative_count = (self.test_p * (self.test_p - 1)) // 2
+        self.assertEqual(len(commutative_pairs), expected_commutative_count)
+        
+        # Test identity pairs
+        identity_pairs = metadata['algebraic_properties']['identity_pairs'] 
+        self.assertEqual(len(identity_pairs), self.test_p)
+        
+        # Test addition table
+        addition_table = metadata['algebraic_properties']['addition_table']
+        self.assertEqual(addition_table.shape, (self.test_p, self.test_p))
+        
+        # Verify addition table is correct
+        for a in range(self.test_p):
+            for b in range(self.test_p):
+                expected = (a + b) % self.test_p
+                actual = addition_table[a, b].item()
+                self.assertEqual(actual, expected)
+    
+    def test_save_and_load(self):
+        """Test dataset serialization."""
+        
+        with tempfile.TemporaryDirectory() as temp_dir:
+            filepath = Path(temp_dir) / 'test_dataset.pkl'
+            
+            # Save dataset
+            self.dataset.save(filepath)
+            self.assertTrue(filepath.exists())
+            
+            # Load dataset
+            loaded_dataset = ModularArithmeticDataset.load(filepath)
+            
+            # Compare key properties
+            self.assertEqual(loaded_dataset.p, self.dataset.p)
+            self.assertEqual(loaded_dataset.representation, self.dataset.representation)
+            
+            # Compare data
+            torch.testing.assert_close(loaded_dataset.data['inputs'], self.dataset.data['inputs'])
+            torch.testing.assert_close(loaded_dataset.data['targets'], self.dataset.data['targets'])
+    
+    def test_json_export(self):
+        """Test JSON metadata export."""
+        
+        with tempfile.TemporaryDirectory() as temp_dir:
+            filepath = Path(temp_dir) / 'test_metadata.json'
+            
+            # Export metadata
+            self.dataset.export_metadata_json(filepath)
+            self.assertTrue(filepath.exists())
+            
+            # Load and verify JSON structure
+            import json
+            with open(filepath, 'r') as f:
+                metadata = json.load(f)
+            
+            self.assertIn('dataset_info', metadata)
+            self.assertIn('circular_structure', metadata)
+            self.assertIn('algebraic_properties', metadata)
+            self.assertEqual(metadata['dataset_info']['p'], self.test_p)
+
+class TestCircularStructureValidator(unittest.TestCase):
+    """Test cases for circular structure validation."""
+    
+    def setUp(self):
+        """Set up test fixtures."""
+        self.test_p = 8  # Use 8 for cleaner circle geometry
+        self.validator = CircularStructureValidator(self.test_p)
+    
+    def test_perfect_circle_validation(self):
+        """Test validation with perfect circular embeddings."""
+        
+        # Create perfect circle embeddings
+        angles = torch.linspace(0, 2 * np.pi, self.test_p, endpoint=False)
+        embeddings = torch.stack([torch.cos(angles), torch.sin(angles)], dim=1)
+        
+        # Validate
+        results = self.validator.validate_embeddings(embeddings, visualize=False)
+        
+        # Should detect perfect circular structure
+        self.assertTrue(results['circular_ordering']['is_circular_order'])
+        self.assertGreater(results['distance_consistency']['distance_correlation'], 0.8)
+        self.assertTrue(results['adjacency_structure']['passes_adjacency_test'])
+        self.assertGreater(results['overall_assessment']['overall_score'], 0.8)
+    
+    def test_random_embeddings_validation(self):
+        """Test validation with random embeddings."""
+        
+        # Create random embeddings
+        embeddings = torch.randn(self.test_p, 64)
+        
+        # Validate
+        results = self.validator.validate_embeddings(embeddings, visualize=False)
+        
+        # Should NOT detect circular structure
+        self.assertLess(results['overall_assessment']['overall_score'], 0.5)
+    
+    def test_noisy_circle_validation(self):
+        """Test validation with noisy circular embeddings."""
+        
+        # Create noisy circle
+        angles = torch.linspace(0, 2 * np.pi, self.test_p, endpoint=False)
+        perfect_embeddings = torch.stack([torch.cos(angles), torch.sin(angles)], dim=1)
+        noise = torch.randn_like(perfect_embeddings) * 0.1
+        noisy_embeddings = perfect_embeddings + noise
+        
+        # Validate
+        results = self.validator.validate_embeddings(noisy_embeddings, visualize=False)
+        
+        # Should still detect circular structure but with lower score
+        self.assertGreater(results['overall_assessment']['overall_score'], 0.5)
+        self.assertLess(results['overall_assessment']['overall_score'], 0.9)
+
+class TestUtilityFunctions(unittest.TestCase):
+    """Test cases for utility functions."""
+    
+    def setUp(self):
+        """Set up test fixtures."""
+        self.dataset = ModularArithmeticDataset(p=7, representation='embedding')
+    
+    def test_consistency_checks(self):
+        """Test dataset consistency checking."""
+        
+        checks = check_dataset_consistency(self.dataset)
+        
+        # All checks should pass for valid dataset
+        for check_name, result in checks.items():
+            self.assertTrue(result, f"Consistency check failed: {check_name}")
+    
+    def test_validation_test_suite(self):
+        """Test creation of validation test suite."""
+        
+        test_suite = create_validation_test_suite(p=5)
+        
+        self.assertIn('perfect_circle_test', test_suite)
+        self.assertIn('noisy_circle_test', test_suite)
+        self.assertIn('random_embeddings_test', test_suite)
+        self.assertIn('validator', test_suite)
+        
+        # Test that embeddings have correct shapes
+        perfect = test_suite['perfect_circle_test']
+        self.assertEqual(perfect.shape, (5, 2))
+
+if __name__ == '__main__':
+    # Create test suite
+    loader = unittest.TestLoader()
+    suite = unittest.TestSuite()
+    
+    # Add all test cases
+    suite.addTests(loader.loadTestsFromTestCase(TestModularArithmeticDataset))
+    suite.addTests(loader.loadTestsFromTestCase(TestCircularStructureValidator))
+    suite.addTests(loader.loadTestsFromTestCase(TestUtilityFunctions))
+    
+    # Run tests
+    runner = unittest.TextTestRunner(verbosity=2)
+    result = runner.run(suite)
+    
+    # Print summary
+    if result.wasSuccessful():
+        print("\n✅ All tests passed!")
+    else:
+        print(f"\n❌ {len(result.failures)} failures, {len(result.errors)} errors")
+```
+
+### File 6: `README.md`
+```markdown
+# Modular Arithmetic Dataset for Neural Network Interpretability
+
+This dataset implementation creates complete training data for learning modular arithmetic operations, specifically designed for neural network interpretability research focusing on concept topology visualization.
+
+## Overview
+
+The dataset generates all possible input pairs `(a, b)` and their corresponding outputs `(a + b) mod p` for a chosen prime `p`. This creates a mathematically structured learning task where neural networks should learn circular representations of numbers 0 through p-1.
+
+## Quick Start
+
+```python
+from dataset import ModularArithmeticDataset
+from validation import CircularStructureValidator
+
+# Create dataset
+dataset = ModularArithmeticDataset(p=17, representation='embedding')
+
+# Basic information
+print(f"Created {dataset.data['num_examples']} examples")
+print(f"Input shape: {dataset.data['inputs'].shape}")
+
+# Save for later use
+dataset.save('data/mod_17_dataset.pkl')
+```
+
+## Files Description
+
+- **`dataset.py`**: Core dataset creation with complete modular arithmetic examples and structural metadata
+- **`validation.py`**: Functions to test if learned embeddings form expected circular structure  
+- **`config.py`**: Configuration constants and model parameters
+- **`utils.py`**: Helper functions for visualization and analysis
+- **`test_dataset.py`**: Comprehensive unit tests
+- **`README.md`**: This documentation
+
+## Dataset Structure
+
+### Core Data
+- **inputs**: `(p², 2)` tensor of all `(a, b)` pairs 
+- **targets**: `(p²,)` tensor of `(a + b) mod p` results
+- **raw_inputs**: List of input tuples for human readability
+- **raw_targets**: List of target values for human readability
+
+### Structural Metadata
+The dataset includes rich metadata about expected mathematical structure:
+
+- **Circular structure**: Adjacent pairs, diameter pairs, expected angular spacing
+- **Algebraic properties**: Commutativity, identity element, inverse pairs, complete addition table
+- **Distance matrices**: Expected circular and Euclidean distances
+- **Validation sets**: Specific test cases for model validation
+
+## Why This Dataset?
+
+### Perfect Ground Truth Structure
+- Numbers 0 through p-1 should form a perfect circle in learned embeddings
+- Adjacent numbers (n, n+1 mod p) should be consistently close
+- Distances should correlate with circular distances on the mathematical circle
+
+### Validation Advantages  
+- Small scale (289 examples for p=17) enables exhaustive analysis
+- Every property is testable and verifiable
+- Clear success criteria for concept extraction methods
+
+### Interpretability Research
+- Tests if visualization methods can detect genuine mathematical structure
+- Enables validation of concept extraction techniques
+- Provides baseline for more complex interpretability tasks
+
+## Usage Examples
+
+### Basic Dataset Creation
+```python
+# Create dataset for mod 17 arithmetic
+dataset = ModularArithmeticDataset(p=17, representation='embedding')
+
+# Show some examples
+for i in range(5):
+    a, b = dataset.data['raw_inputs'][i]  
+    result = dataset.data['raw_targets'][i]
+    print(f"{a} + {b} = {result} (mod 17)")
+```
+
+### Structure Validation
+```python
+from validation import CircularStructureValidator
+
+# Assuming you have learned embeddings from a model
+validator = CircularStructureValidator(p=17)
+results = validator.validate_embeddings(learned_embeddings)
+
+print(f"Circular structure score: {results['overall_assessment']['overall_score']:.2f}")
+print(f"Assessment: {results['overall_assessment']['quality_assessment']}")
+```
+
+### Visualization
+```python
+from utils import visualize_addition_table, visualize_circular_structure
+
+# Show the mathematical structure  
+visualize_addition_table(p=17)
+
+# Compare learned vs expected structure
+visualize_circular_structure(learned_embeddings, p=17)
+```
+
+## Testing
+
+Run comprehensive unit tests:
+```bash
+python test_dataset.py
+```
+
+Tests cover:
+- Mathematical correctness of all examples
+- Completeness (all pairs included exactly once)
+- Different representation formats
+- Metadata generation
+- Serialization/deserialization
+- Structure validation with known embeddings
+
+## Expected Model Behavior
+
+A successfully trained model should:
+1. **Achieve >99% accuracy** on all examples (task is fully learnable)
+2. **Learn circular embeddings** where numbers form a circle when projected to 2D
+3. **Maintain adjacency relationships** where consecutive numbers are consistently close
+4. **Respect algebraic structure** where commutativity and identity properties hold
+
+## Dataset Variants
+
+### Different Primes
+- **p=13**: 169 examples (smaller, faster training)
+- **p=17**: 289 examples (recommended default)  
+- **p=23**: 529 examples (larger scale testing)
+
+### Different Representations
+- **embedding**: Integer indices for learned embeddings (recommended)
+- **one_hot**: One-hot vectors for each number
+- **integer**: Direct integer values
+
+## Integration with Model Training
+
+This dataset is designed to work with:
+- Small transformer models (2-layer, 4-head, 64-dim)
+- Mamba/SSM models (2-layer, 64-dim)
+- Any sequence-to-sequence or classification architecture
+
+The key is extracting intermediate representations (embeddings) for structure validation, not just achieving high accuracy.
+
+## Research Applications
+
+This dataset enables research in:
+- **Concept extraction**: Testing methods for identifying learned concepts
+- **Topology visualization**: Validating graph construction from neural representations  
+- **Interpretability methods**: Benchmarking visualization techniques against known structure
+- **Architecture comparison**: Comparing how different models learn mathematical structure
+
+## Contact and Contribution
+
+This implementation is part of a neural network interpretability research project. The code is designed to be modular and extensible for related interpretability tasks.
+```
+
+## Implementation Instructions for AI Agent
+
+### Priority Order
+1. **First**: Implement `config.py` and `dataset.py` - these are the core dependencies
+2. **Second**: Implement `validation.py` - needed for testing learned structure
+3. **Third**: Implement `utils.py` and `test_dataset.py` - for debugging and validation
+4. **Fourth**: Create `README.md` - for documentation
+5. **Final**: Run tests and create sample datasets
+
+### Directory Structure
+```
+modular_arithmetic_dataset/
+├── dataset.py
+├── validation.py  
+├── config.py
+├── utils.py
+├── test_dataset.py
+├── README.md
+├── data/           # Generated datasets go here
+├── results/        # Analysis results go here
+└── models/         # Trained models go here (later)
+```
+
+### Key Requirements
+- **Python 3.8+** with PyTorch, NumPy, scikit-learn, matplotlib
+- **Focus on p=17** as primary test case (289 examples)
+- **Embedding representation** as default (integers for learned embeddings)
+- **Comprehensive testing** - all tests must pass before proceeding
+- **Clear documentation** - every function should have docstrings
+
+### Validation Criteria
+1. All unit tests pass
+2. Dataset creates exactly p² examples for mod p arithmetic
+3. All mathematical operations are correct
+4. Metadata includes circular and algebraic structure information
+5. Validation functions can distinguish circular from random embeddings
+6. Files can be serialized/deserialized successfully
+
+This implementation will provide the foundation for training neural networks and testing concept topology visualization methods.

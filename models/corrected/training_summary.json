@@ -1,0 +1,75 @@
+{
+  "high_accuracy_rate": 0.0,
+  "success_rate": 0.0,
+  "total_models": 12,
+  "high_accuracy_models": 0,
+  "successful_models": 0,
+  "results_by_vocab_size": {
+    "13": {
+      "simple_linear_sgd_FullBatch": {
+        "accuracy": 0.058823529411764705,
+        "epochs": 101,
+        "saved": false
+      },
+      "simple_linear_adam_SmallBatch": {
+        "accuracy": 0.11764705882352941,
+        "epochs": 101,
+        "saved": false
+      },
+      "simple_mlp_adamw_SmallBatch": {
+        "accuracy": 0.11764705882352941,
+        "epochs": 102,
+        "saved": false
+      },
+      "simple_linear_sgd_HighLR": {
+        "accuracy": 0.029411764705882353,
+        "epochs": 101,
+        "saved": false
+      }
+    },
+    "17": {
+      "simple_linear_sgd_FullBatch": {
+        "accuracy": 0.05172413793103448,
+        "epochs": 101,
+        "saved": false
+      },
+      "simple_linear_adam_SmallBatch": {
+        "accuracy": 0.034482758620689655,
+        "epochs": 178,
+        "saved": false
+      },
+      "simple_mlp_adamw_SmallBatch": {
+        "accuracy": 0.10344827586206896,
+        "epochs": 108,
+        "saved": false
+      },
+      "simple_linear_sgd_HighLR": {
+        "accuracy": 0.05172413793103448,
+        "epochs": 101,
+        "saved": false
+      }
+    },
+    "23": {
+      "simple_linear_sgd_FullBatch": {
+        "accuracy": 0.02830188679245283,
+        "epochs": 103,
+        "saved": false
+      },
+      "simple_linear_adam_SmallBatch": {
+        "accuracy": 0.33962264150943394,
+        "epochs": 300,
+        "saved": false
+      },
+      "simple_mlp_adamw_SmallBatch": {
+        "accuracy": 0.05660377358490566,
+        "epochs": 101,
+        "saved": false
+      },
+      "simple_linear_sgd_HighLR": {
+        "accuracy": 0.018867924528301886,
+        "epochs": 101,
+        "saved": false
+      }
+    }
+  }
+}

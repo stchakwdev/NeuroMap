@@ -1,0 +1,33 @@
+{
+  "use_cases": {
+    "mod_17": [
+      "Rapid prototyping and initial development",
+      "Educational demonstrations and tutorials",
+      "Resource-constrained environments",
+      "Baseline comparisons with existing literature",
+      "Quick validation of interpretability methods",
+      "Real-time demonstrations"
+    ],
+    "mod_23": [
+      "Publication-quality research and analysis",
+      "Comprehensive method validation",
+      "Statistical significance testing",
+      "Fine-grained concept extraction",
+      "High-resolution topology visualization",
+      "Robust cross-validation studies"
+    ]
+  },
+  "decision_factors": {
+    "speed_priority": "mod_17",
+    "quality_priority": "mod_23",
+    "education_focus": "mod_17",
+    "research_focus": "mod_23",
+    "limited_resources": "mod_17",
+    "comprehensive_analysis": "mod_23"
+  },
+  "hybrid_approach": {
+    "development_phase": "mod_17",
+    "validation_phase": "mod_23",
+    "publication_phase": "mod_23"
+  }
+}
