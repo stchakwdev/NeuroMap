@@ -192,7 +192,26 @@
                     <div class="metric-section">
                         <h5><i class="fas fa-info-circle"></i> Model Info</h5>
                         <div id="model-info" class="metric-content">
-                            <p class="text-muted">Select a model to view information</p>
+                            <div class="info-row">
+                                <span class="info-label">Name:</span>
+                                <span id="model-name" class="info-value">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Architecture:</span>
+                                <span id="model-architecture" class="info-value">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Modulus:</span>
+                                <span id="model-p-value" class="info-value">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Type:</span>
+                                <span id="model-type" class="info-value">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Parameters:</span>
+                                <span id="model-parameters" class="info-value">-</span>
+                            </div>
                         </div>
                     </div>
 
@@ -338,205 +357,6 @@
     <script src="js/metrics_dashboard.js"></script>
     <script src="js/app.js"></script>
     
-    <!-- Application Initialization -->
-    <script>
-        // Initialize the application when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Neural Topology Visualization starting...');
-            
-            // Initialize main components
-            const topologyViewer = new TopologyViewer('main-visualization');
-            const metricsDashboard = new MetricsDashboard();
-            const comparisonMode = new ComparisonMode();
-            
-            // Global app state
-            window.NeuralTopologyApp = {
-                topologyViewer: topologyViewer,
-                metricsDashboard: metricsDashboard,
-                comparisonMode: comparisonMode,
-                currentModel: null,
-                models: null
-            };
-            
-            // Load initial data
-            loadModelsData();
-            
-            // Setup event listeners
-            setupEventListeners();
-            
-            console.log('✅ Neural Topology Visualization initialized!');
-        });
-        
-        // Main application functions
-        async function loadModelsData() {
-            try {
-                showLoading(true);
-                const response = await fetch('data/models.json');
-                const data = await response.json();
-                
-                window.NeuralTopologyApp.models = data;
-                populateModelSelectors(data);
-                showLoading(false);
-                
-                console.log('📊 Loaded data for', Object.keys(data.models).length, 'models');
-            } catch (error) {
-                console.error('❌ Failed to load models data:', error);
-                showError('Failed to load model data. Please ensure the data files are generated.');
-            }
-        }
-        
-        function populateModelSelectors(data) {
-            const modelSelect = document.getElementById('model-select');
-            const architectureFilter = document.getElementById('architecture-filter');
-            const modulusFilter = document.getElementById('modulus-filter');
-            
-            // Clear existing options
-            modelSelect.innerHTML = '<option value="">Choose a model...</option>';
-            architectureFilter.innerHTML = '<option value="">All Architectures</option>';
-            modulusFilter.innerHTML = '<option value="">All Moduli</option>';
-            
-            // Populate model list
-            Object.keys(data.models).forEach(modelName => {
-                const modelData = data.models[modelName];
-                if (modelData.error) return; // Skip failed models
-                
-                const option = document.createElement('option');
-                option.value = modelName;
-                option.textContent = `${modelName} (p=${modelData.model_info.p}, acc=${(modelData.model_info.accuracy * 100).toFixed(1)}%)`;
-                modelSelect.appendChild(option);
-            });
-            
-            // Populate filters
-            if (data.comparative_analysis) {
-                // Architecture filter
-                if (data.comparative_analysis.by_architecture) {
-                    Object.keys(data.comparative_analysis.by_architecture).forEach(arch => {
-                        const option = document.createElement('option');
-                        option.value = arch;
-                        option.textContent = arch;
-                        architectureFilter.appendChild(option);
-                    });
-                }
-                
-                // Modulus filter
-                if (data.comparative_analysis.by_modulus) {
-                    Object.keys(data.comparative_analysis.by_modulus).sort((a, b) => parseInt(a) - parseInt(b)).forEach(p => {
-                        const option = document.createElement('option');
-                        option.value = p;
-                        option.textContent = `p = ${p}`;
-                        modulusFilter.appendChild(option);
-                    });
-                }
-            }
-        }
-        
-        function setupEventListeners() {
-            // Model selection
-            document.getElementById('model-select').addEventListener('change', function() {
-                const modelName = this.value;
-                if (modelName) {
-                    selectModel(modelName);
-                }
-            });
-            
-            // Visualization controls
-            ['reduction-method', 'connection-method', 'layout-method'].forEach(id => {
-                document.getElementById(id).addEventListener('change', updateVisualization);
-            });
-            
-            // Toggle controls
-            document.getElementById('show-edges').addEventListener('change', updateVisualization);
-            document.getElementById('show-labels').addEventListener('change', updateVisualization);
-            
-            // Action buttons
-            document.getElementById('animate-layout').addEventListener('click', animateLayoutTransition);
-            document.getElementById('reset-camera').addEventListener('click', resetCamera);
-            document.getElementById('screenshot-btn').addEventListener('click', takeScreenshot);
-            document.getElementById('fullscreen-btn').addEventListener('click', toggleFullscreen);
-            
-            // Navigation tabs
-            document.getElementById('comparison-view-tab').addEventListener('click', function() {
-                new bootstrap.Modal(document.getElementById('comparison-modal')).show();
-            });
-        }
-        
-        function selectModel(modelName) {
-            const modelData = window.NeuralTopologyApp.models.models[modelName];
-            if (!modelData || modelData.error) {
-                showError(`Failed to load model: ${modelName}`);
-                return;
-            }
-            
-            console.log('🔍 Selected model:', modelName);
-            window.NeuralTopologyApp.currentModel = modelData;
-            
-            // Update UI
-            document.getElementById('current-model-title').textContent = 
-                `${modelName} (${modelData.model_info.architecture})`;
-            
-            // Update metrics dashboard
-            window.NeuralTopologyApp.metricsDashboard.updateMetrics(modelData);
-            
-            // Update visualization
-            updateVisualization();
-        }
-        
-        function updateVisualization() {
-            const currentModel = window.NeuralTopologyApp.currentModel;
-            if (!currentModel) return;
-            
-            const reductionMethod = document.getElementById('reduction-method').value;
-            const connectionMethod = document.getElementById('connection-method').value;
-            const layoutMethod = document.getElementById('layout-method').value;
-            const showEdges = document.getElementById('show-edges').checked;
-            const showLabels = document.getElementById('show-labels').checked;
-            
-            const vizKey = `${reductionMethod}_${connectionMethod}`;
-            const visualization = currentModel.visualizations[vizKey];
-            
-            if (!visualization) {
-                showError(`Visualization not available: ${vizKey}`);
-                return;
-            }
-            
-            // Update topology viewer
-            window.NeuralTopologyApp.topologyViewer.loadVisualization(visualization, {
-                layout: layoutMethod,
-                showEdges: showEdges,
-                showLabels: showLabels
-            });
-        }
-        
-        function animateLayoutTransition() {
-            window.NeuralTopologyApp.topologyViewer.animateLayoutTransition();
-        }
-        
-        function resetCamera() {
-            window.NeuralTopologyApp.topologyViewer.resetCamera();
-        }
-        
-        function takeScreenshot() {
-            window.NeuralTopologyApp.topologyViewer.takeScreenshot();
-        }
-        
-        function toggleFullscreen() {
-            if (document.fullscreenElement) {
-                document.exitFullscreen();
-            } else {
-                document.documentElement.requestFullscreen();
-            }
-        }
-        
-        function showLoading(show) {
-            document.getElementById('loading-indicator').style.display = show ? 'flex' : 'none';
-            document.getElementById('main-visualization').style.display = show ? 'none' : 'block';
-        }
-        
-        function showError(message) {
-            console.error('❌', message);
-            // You could implement a toast notification system here
-            alert('Error: ' + message);
-        }
-    </script>
+    <!-- App.js handles all initialization -->
 </body>
 </html>
