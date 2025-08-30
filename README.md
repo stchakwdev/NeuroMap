@@ -29,43 +29,25 @@ A complete 3D visualization framework built with Three.js that enables:
 - Comparative analysis between different architectures
 - Quantitative topology metrics and quality assessment
 
-## Screenshots
+## Live Demo
 
-### Interactive Web Application
-The complete visualization framework provides a professional interface for exploring neural network concept topology in real-time:
+### Interactive Neural Topology Visualization
+Real-time exploration of how memory-based neural networks organize learned mathematical concepts:
 
-![Main Dashboard](screenshots/web_interface/main_dashboard.png)
-*Interactive dashboard showing DirectLookup model achieving 100% accuracy with real-time topology metrics and 3D visualization controls*
+![Neural Topology Interface](screenshots/3_webapp/main_interface.png)
+*Interactive 3D topology visualization showing DirectLookup model achieving 100% accuracy. The circular arrangement demonstrates preserved mathematical structure in learned embeddings.*
 
-### Breakthrough Performance Results
-Our memory-based architectures demonstrate unprecedented scaling performance:
+### Dataset and Training Overview
+Modular arithmetic provides mathematically structured learning tasks with verifiable ground truth:
 
-![Accuracy Comparison](screenshots/results/accuracy_comparison_breakthrough.png)
-*Comprehensive accuracy comparison across modulus values showing 100% success rate for memory-based models vs 20-30% for traditional approaches*
+![Dataset Overview](screenshots/1_datasets/modular_arithmetic_overview.png)
+*Modular arithmetic dataset structure showing task examples, expected topology, breakthrough performance results, and comprehensive validation framework.*
 
-![Scaling Analysis](screenshots/results/scaling_analysis_breakthrough.png)
-*Scaling performance analysis demonstrating maintained 100% accuracy across all tested moduli for memory-based architectures*
+### Performance Breakthrough
+Memory-based architectures achieve perfect scaling where traditional models fail:
 
-### Training Efficiency Analysis
-Memory-based models achieve superior results with dramatically reduced computational requirements:
-
-![Training Efficiency](screenshots/results/training_efficiency_comparison.png)
-*Training time vs accuracy analysis showing memory-based models achieve perfect accuracy in under 0.2 seconds*
-
-![Architecture Summary](screenshots/results/architecture_comparison_summary.png)
-*Comprehensive architectural comparison highlighting memory-based advantage across all performance metrics*
-
-### Topology Validation Framework
-Mathematical validation ensures interpretability claims are scientifically grounded:
-
-![Circular Structure Analysis](screenshots/validation/circular_structure_demo.png)
-*Circular structure analysis demonstrating how memory-based models preserve mathematical relationships in learned embeddings*
-
-![Validation Framework](screenshots/validation/validation_framework.png)
-*Comprehensive validation framework showing quantitative topology metrics and structural analysis*
-
-![Dataset Validation](screenshots/validation/dataset_comparison.png)
-*Cross-modulus dataset validation demonstrating scalability and reproducibility of the interpretability framework*
+![Training Performance](screenshots/2_training/accuracy_comparison.png)
+*Performance comparison demonstrating 100% accuracy for memory-based models vs 20-30% for traditional approaches across all tested modulus values.*
 
 ## Project Structure
 
