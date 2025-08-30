@@ -29,6 +29,32 @@ A complete 3D visualization framework built with Three.js that enables:
 - Comparative analysis between different architectures
 - Quantitative topology metrics and quality assessment
 
+## Screenshots
+
+### Interactive Web Interface
+The complete visualization framework provides an intuitive interface for exploring neural network concept topology:
+
+![Web Interface Overview](screenshots/validation_framework.png)
+*Main interface showing model selection controls, visualization options, and metrics dashboard*
+
+### Topology Analysis Results
+Our framework reveals clear structural differences between neural architectures:
+
+![Circular Structure Analysis](screenshots/circular_structure_demo.png)
+*Circular structure analysis demonstrating how memory-based models preserve mathematical relationships*
+
+### Comparative Visualization
+Multi-model comparison capabilities enable systematic analysis of architectural differences:
+
+![Embedding Comparison](screenshots/embedding_comparison.png)
+*Embedding space comparison showing superior concept organization in memory-based models*
+
+### Dataset Validation Framework
+Comprehensive validation ensures interpretability claims are mathematically grounded:
+
+![Dataset Comparison](screenshots/dataset_comparison.png)
+*Cross-modulus validation demonstrating scalability of the interpretability framework*
+
 ## Project Structure
 
 ```
