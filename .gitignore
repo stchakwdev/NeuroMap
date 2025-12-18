@@ -92,7 +92,7 @@ Dataset/modular_arithmetic_dataset/data/*.npy
 Dataset/modular_arithmetic_dataset/data/*.pkl
 
 # Experimental and research files
-experiments/
+# experiments/ - now tracked for reproducibility
 research_notes/
 analysis_cache/
 

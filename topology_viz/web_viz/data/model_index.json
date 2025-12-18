@@ -1,0 +1,209 @@
+{
+  "models": [
+    {
+      "id": "Linear_Adam_SmallBatch_p7",
+      "name": "Linear_Adam_SmallBatch_p7",
+      "architecture": "LinearModel",
+      "p": 7,
+      "type": "traditional",
+      "accuracy": 1.0,
+      "circular_structure_score": 0.0,
+      "has_visualizations": true,
+      "available_visualizations": [
+        "pca_modular",
+        "pca_similarity",
+        "pca_hybrid",
+        "tsne_modular",
+        "tsne_similarity",
+        "tsne_hybrid",
+        "umap_modular",
+        "umap_similarity",
+        "umap_hybrid"
+      ]
+    },
+    {
+      "id": "Linear_SGD_FullBatch_p7",
+      "name": "Linear_SGD_FullBatch_p7",
+      "architecture": "LinearModel",
+      "p": 7,
+      "type": "traditional",
+      "accuracy": 1.0,
+      "circular_structure_score": 0.3,
+      "has_visualizations": true,
+      "available_visualizations": [
+        "pca_modular",
+        "pca_similarity",
+        "pca_hybrid",
+        "tsne_modular",
+        "tsne_similarity",
+        "tsne_hybrid",
+        "umap_modular",
+        "umap_similarity",
+        "umap_hybrid"
+      ]
+    },
+    {
+      "id": "TinyTransformer_AdamW_p7",
+      "name": "TinyTransformer_AdamW_p7",
+      "architecture": "TinyTransformer",
+      "p": 7,
+      "type": "traditional",
+      "accuracy": 1.0,
+      "circular_structure_score": 0.0,
+      "has_visualizations": true,
+      "available_visualizations": [
+        "pca_modular",
+        "pca_similarity",
+        "pca_hybrid",
+        "tsne_modular",
+        "tsne_similarity",
+        "tsne_hybrid",
+        "umap_modular",
+        "umap_similarity",
+        "umap_hybrid"
+      ]
+    },
+    {
+      "id": "DirectLookup_Adam_p13",
+      "name": "DirectLookup_Adam_p13",
+      "architecture": "DirectLookupModel",
+      "p": 13,
+      "type": "memory",
+      "accuracy": 1.0,
+      "circular_structure_score": 0.0,
+      "has_visualizations": true,
+      "available_visualizations": [
+        "pca_modular",
+        "pca_similarity",
+        "pca_hybrid",
+        "tsne_modular",
+        "tsne_similarity",
+        "tsne_hybrid",
+        "umap_modular",
+        "umap_similarity",
+        "umap_hybrid"
+      ]
+    },
+    {
+      "id": "HybridMemory_AdamW_p13",
+      "name": "HybridMemory_AdamW_p13",
+      "architecture": "HybridMemoryModel",
+      "p": 13,
+      "type": "memory",
+      "accuracy": 1.0,
+      "circular_structure_score": 0.0,
+      "has_visualizations": true,
+      "available_visualizations": [
+        "pca_modular",
+        "pca_similarity",
+        "pca_hybrid",
+        "tsne_modular",
+        "tsne_similarity",
+        "tsne_hybrid",
+        "umap_modular",
+        "umap_similarity",
+        "umap_hybrid"
+      ]
+    },
+    {
+      "id": "DirectLookup_Adam_p17",
+      "name": "DirectLookup_Adam_p17",
+      "architecture": "DirectLookupModel",
+      "p": 17,
+      "type": "memory",
+      "accuracy": 1.0,
+      "circular_structure_score": 0.0,
+      "has_visualizations": true,
+      "available_visualizations": [
+        "pca_modular",
+        "pca_similarity",
+        "pca_hybrid",
+        "tsne_modular",
+        "tsne_similarity",
+        "tsne_hybrid",
+        "umap_modular",
+        "umap_similarity",
+        "umap_hybrid"
+      ]
+    },
+    {
+      "id": "HybridMemory_AdamW_p17",
+      "name": "HybridMemory_AdamW_p17",
+      "architecture": "HybridMemoryModel",
+      "p": 17,
+      "type": "memory",
+      "accuracy": 1.0,
+      "circular_structure_score": 0.0,
+      "has_visualizations": true,
+      "available_visualizations": [
+        "pca_modular",
+        "pca_similarity",
+        "pca_hybrid",
+        "tsne_modular",
+        "tsne_similarity",
+        "tsne_hybrid",
+        "umap_modular",
+        "umap_similarity",
+        "umap_hybrid"
+      ]
+    },
+    {
+      "id": "DirectLookup_Adam_p23",
+      "name": "DirectLookup_Adam_p23",
+      "architecture": "DirectLookupModel",
+      "p": 23,
+      "type": "memory",
+      "accuracy": 1.0,
+      "circular_structure_score": 0.0,
+      "has_visualizations": true,
+      "available_visualizations": [
+        "pca_modular",
+        "pca_similarity",
+        "pca_hybrid",
+        "tsne_modular",
+        "tsne_similarity",
+        "tsne_hybrid",
+        "umap_modular",
+        "umap_similarity",
+        "umap_hybrid"
+      ]
+    },
+    {
+      "id": "HybridMemory_AdamW_p23",
+      "name": "HybridMemory_AdamW_p23",
+      "architecture": "HybridMemoryModel",
+      "p": 23,
+      "type": "memory",
+      "accuracy": 0.998,
+      "circular_structure_score": 0.0,
+      "has_visualizations": true,
+      "available_visualizations": [
+        "pca_modular",
+        "pca_similarity",
+        "pca_hybrid",
+        "tsne_modular",
+        "tsne_similarity",
+        "tsne_hybrid",
+        "umap_modular",
+        "umap_similarity",
+        "umap_hybrid"
+      ]
+    }
+  ],
+  "architectures": [
+    "DirectLookupModel",
+    "HybridMemoryModel",
+    "LinearModel",
+    "TinyTransformer"
+  ],
+  "moduli": [
+    7,
+    13,
+    17,
+    23
+  ],
+  "types": [
+    "memory",
+    "traditional"
+  ]
+}

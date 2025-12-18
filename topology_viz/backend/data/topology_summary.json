@@ -1,0 +1,130 @@
+{
+  "generation_info": {
+    "timestamp": "2025-09-06 18:34:39",
+    "total_models": 9
+  },
+  "model_summary": {
+    "Linear_SGD_FullBatch_p7": {
+      "architecture": "LinearModel",
+      "p": 7,
+      "type": "traditional",
+      "accuracy": 1.0,
+      "circular_structure_score": 0.3,
+      "silhouette_score": 0.0,
+      "visualizations_available": 9
+    },
+    "Linear_Adam_SmallBatch_p7": {
+      "architecture": "LinearModel",
+      "p": 7,
+      "type": "traditional",
+      "accuracy": 1.0,
+      "circular_structure_score": 0.0,
+      "silhouette_score": 0.0,
+      "visualizations_available": 9
+    },
+    "TinyTransformer_AdamW_p7": {
+      "architecture": "TinyTransformer",
+      "p": 7,
+      "type": "traditional",
+      "accuracy": 1.0,
+      "circular_structure_score": 0.0,
+      "silhouette_score": 0.0,
+      "visualizations_available": 9
+    },
+    "DirectLookup_Adam_p13": {
+      "architecture": "DirectLookupModel",
+      "p": 13,
+      "type": "memory",
+      "accuracy": 1.0,
+      "circular_structure_score": 0.0,
+      "silhouette_score": 0.0,
+      "visualizations_available": 9
+    },
+    "HybridMemory_AdamW_p13": {
+      "architecture": "HybridMemoryModel",
+      "p": 13,
+      "type": "memory",
+      "accuracy": 1.0,
+      "circular_structure_score": 0.0,
+      "silhouette_score": 0.0,
+      "visualizations_available": 9
+    },
+    "DirectLookup_Adam_p17": {
+      "architecture": "DirectLookupModel",
+      "p": 17,
+      "type": "memory",
+      "accuracy": 1.0,
+      "circular_structure_score": 0.0,
+      "silhouette_score": 0.0,
+      "visualizations_available": 9
+    },
+    "HybridMemory_AdamW_p17": {
+      "architecture": "HybridMemoryModel",
+      "p": 17,
+      "type": "memory",
+      "accuracy": 1.0,
+      "circular_structure_score": 0.0,
+      "silhouette_score": 0.0,
+      "visualizations_available": 9
+    },
+    "DirectLookup_Adam_p23": {
+      "architecture": "DirectLookupModel",
+      "p": 23,
+      "type": "memory",
+      "accuracy": 1.0,
+      "circular_structure_score": 0.0,
+      "silhouette_score": 0.0,
+      "visualizations_available": 9
+    },
+    "HybridMemory_AdamW_p23": {
+      "architecture": "HybridMemoryModel",
+      "p": 23,
+      "type": "memory",
+      "accuracy": 0.998,
+      "circular_structure_score": 0.0,
+      "silhouette_score": 0.0,
+      "visualizations_available": 9
+    }
+  },
+  "comparative_insights": {
+    "successful_models": 9,
+    "visualization_ready_models": 9,
+    "average_accuracy_by_p": {
+      "7": 1.0,
+      "13": 1.0,
+      "17": 1.0,
+      "23": 0.999
+    },
+    "average_circular_score_by_architecture": {
+      "LinearModel": 0.15,
+      "TinyTransformer": 0.0,
+      "DirectLookupModel": 0.0,
+      "HybridMemoryModel": 0.0
+    },
+    "best_circular_structure": {
+      "model": "Linear_SGD_FullBatch_p7",
+      "score": 0.3
+    },
+    "highest_accuracy_models": [
+      "Linear_SGD_FullBatch_p7",
+      "Linear_Adam_SmallBatch_p7",
+      "TinyTransformer_AdamW_p7",
+      "DirectLookup_Adam_p13",
+      "HybridMemory_AdamW_p13",
+      "DirectLookup_Adam_p17",
+      "HybridMemory_AdamW_p17",
+      "DirectLookup_Adam_p23"
+    ]
+  },
+  "visualization_ready": [
+    "Linear_SGD_FullBatch_p7",
+    "Linear_Adam_SmallBatch_p7",
+    "TinyTransformer_AdamW_p7",
+    "DirectLookup_Adam_p13",
+    "HybridMemory_AdamW_p13",
+    "DirectLookup_Adam_p17",
+    "HybridMemory_AdamW_p17",
+    "DirectLookup_Adam_p23",
+    "HybridMemory_AdamW_p23"
+  ]
+}
