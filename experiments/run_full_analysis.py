@@ -209,12 +209,12 @@ def run_analysis(args):
 
     summary = {
         'modulus': p,
-        'n_examples': dataset.data['num_examples'],
-        'embedding_dim': embeddings.shape[1],
-        'fourier_alignment': alignment.alignment_score,
-        'is_fourier_based': alignment.is_fourier_based,
-        'is_circular': circular['is_circular'],
-        'distance_correlation': circular['distance_correlation'],
+        'n_examples': int(dataset.data['num_examples']),
+        'embedding_dim': int(embeddings.shape[1]),
+        'fourier_alignment': float(alignment.alignment_score),
+        'is_fourier_based': bool(alignment.is_fourier_based),
+        'is_circular': bool(circular['is_circular']),
+        'distance_correlation': float(circular['distance_correlation']),
         'causal_layers_analyzed': len(causal_results),
     }
 

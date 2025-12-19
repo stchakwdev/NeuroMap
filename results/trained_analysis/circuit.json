@@ -1,0 +1,81 @@
+{
+  "name": "main_circuit",
+  "components": [
+    {
+      "name": "embed",
+      "type": "embedding",
+      "layer": -1,
+      "importance": 1.0
+    },
+    {
+      "name": "L0H0",
+      "type": "attention_head",
+      "layer": 0,
+      "importance": 0.10000002384185791
+    },
+    {
+      "name": "L0H2",
+      "type": "attention_head",
+      "layer": 0,
+      "importance": 0.10000002384185791
+    },
+    {
+      "name": "L0H1",
+      "type": "attention_head",
+      "layer": 0,
+      "importance": 0.07999998331069946
+    },
+    {
+      "name": "L0H3",
+      "type": "attention_head",
+      "layer": 0,
+      "importance": 0.07999998331069946
+    },
+    {
+      "name": "L0_MLP",
+      "type": "mlp",
+      "layer": 0,
+      "importance": 0.4399999976158142
+    },
+    {
+      "name": "output",
+      "type": "output",
+      "layer": 2,
+      "importance": 1.0
+    }
+  ],
+  "edges": [
+    {
+      "source": "embed",
+      "target": "L0H0",
+      "weight": 0.10000002384185791
+    },
+    {
+      "source": "L0H0",
+      "target": "L0H2",
+      "weight": 0.10000002384185791
+    },
+    {
+      "source": "L0H2",
+      "target": "L0H1",
+      "weight": 0.07999998331069946
+    },
+    {
+      "source": "L0H1",
+      "target": "L0H3",
+      "weight": 0.07999998331069946
+    },
+    {
+      "source": "L0H3",
+      "target": "L0_MLP",
+      "weight": 0.4399999976158142
+    },
+    {
+      "source": "L0_MLP",
+      "target": "output",
+      "weight": 1.0
+    }
+  ],
+  "total_importance": 0.800000011920929,
+  "description": "Main computational circuit for modular arithmetic"
+}

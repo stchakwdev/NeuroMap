@@ -1,0 +1,35 @@
+============================================================
+CIRCUIT DISCOVERY REPORT
+============================================================
+
+Circuit: main_circuit
+Total Importance: 0.8000
+Description: Main computational circuit for modular arithmetic
+
+COMPONENTS
+----------------------------------------
+  embed (embedding)
+    Layer: -1, Importance: 1.0000
+  output (output)
+    Layer: 2, Importance: 1.0000
+  L0_MLP (mlp)
+    Layer: 0, Importance: 0.4400
+  L0H0 (attention_head)
+    Layer: 0, Importance: 0.1000
+  L0H2 (attention_head)
+    Layer: 0, Importance: 0.1000
+  L0H1 (attention_head)
+    Layer: 0, Importance: 0.0800
+  L0H3 (attention_head)
+    Layer: 0, Importance: 0.0800
+
+INFORMATION FLOW
+----------------------------------------
+  embed -> L0H0 (weight: 0.1000)
+  L0H0 -> L0H2 (weight: 0.1000)
+  L0H2 -> L0H1 (weight: 0.0800)
+  L0H1 -> L0H3 (weight: 0.0800)
+  L0H3 -> L0_MLP (weight: 0.4400)
+  L0_MLP -> output (weight: 1.0000)
+
+============================================================

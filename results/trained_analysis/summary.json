@@ -1,0 +1,10 @@
+{
+  "modulus": 17,
+  "n_examples": 289,
+  "embedding_dim": 64,
+  "fourier_alignment": 1.0,
+  "is_fourier_based": false,
+  "is_circular": false,
+  "distance_correlation": 0.011602609303934933,
+  "causal_layers_analyzed": 5
+}

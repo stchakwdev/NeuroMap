@@ -1,0 +1,32 @@
+============================================================
+FOURIER ANALYSIS REPORT
+============================================================
+
+FOURIER COMPONENTS
+----------------------------------------
+  Dominant frequency: k = 4
+  Reconstruction error: 0.000000
+
+FOURIER ALIGNMENT
+----------------------------------------
+  Alignment score: 1.0000
+  Key frequencies: []
+  Is Fourier-based: False
+
+BASIS SIMILARITY
+----------------------------------------
+  Mean best correlation: nan
+  Highly aligned dims: 0
+
+CIRCULAR STRUCTURE
+----------------------------------------
+  Distance correlation: 0.0116
+  Adjacency ratio: 0.9813
+  Is circular: False
+
+INTERPRETATION
+----------------------------------------
+  [PARTIAL] Model shows some Fourier structure
+  May be learning a hybrid or approximate algorithm
+
+============================================================

@@ -2,6 +2,20 @@
 
 A mechanistic interpretability framework that reveals how neural networks internally compute modular arithmetic through Fourier-based algorithms. NeuroMap goes beyond visualization to provide **causal verification** that discovered structures are computationally meaningful.
 
+![Pipeline Overview](screenshots/analysis/pipeline_overview.png)
+
+## Key Visualizations
+
+| Fourier Spectrum | Embedding Circle | Circuit Diagram |
+|:---:|:---:|:---:|
+| ![Fourier Spectrum](screenshots/analysis/fourier_spectrum.png) | ![Embedding Circle](screenshots/analysis/embedding_circle.png) | ![Circuit Diagram](screenshots/analysis/circuit_diagram.png) |
+| Frequency components in embeddings | Numbers form circular structure | Discovered computational circuit |
+
+| Causal Intervention | Training Dynamics |
+|:---:|:---:|
+| ![Causal Intervention](screenshots/analysis/causal_intervention.png) | ![Training Dynamics](screenshots/analysis/training_dynamics.png) |
+| Layer importance via ablation | Grokking and Fourier emergence |
+
 ## The Research Question
 
 When transformers learn `f(a,b) = (a + b) mod p`, do they develop interpretable internal algorithms?

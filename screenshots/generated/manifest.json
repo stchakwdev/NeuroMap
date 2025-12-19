@@ -1,0 +1,16 @@
+{
+  "modulus": 17,
+  "format": "png",
+  "dpi": 150,
+  "files": [
+    "embedding_circle.png",
+    "fourier_spectrum.png",
+    "pipeline_overview.png",
+    "architecture_comparison.png",
+    "circuit_diagram.png",
+    "distance_correlation.png",
+    "causal_intervention.png",
+    "faithfulness_comparison.png",
+    "training_dynamics.png"
+  ]
+}

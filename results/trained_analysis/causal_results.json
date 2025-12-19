@@ -1,0 +1,22 @@
+{
+  "embed": {
+    "accuracy_drop": 0.9400000013411045,
+    "loss_increase": 6.265239872271195
+  },
+  "pos_embed": {
+    "accuracy_drop": 0.019999980926513672,
+    "loss_increase": 0.0418622384313494
+  },
+  "hook_embed": {
+    "accuracy_drop": 0.9400000013411045,
+    "loss_increase": 6.265239872271195
+  },
+  "hook_pos_embed": {
+    "accuracy_drop": 0.019999980926513672,
+    "loss_increase": 0.0418622384313494
+  },
+  "blocks.0.attn": {
+    "accuracy_drop": 0.7999999970197678,
+    "loss_increase": 3.976796783739701
+  }
+}
