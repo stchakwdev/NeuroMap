@@ -1,5 +1,10 @@
 # NeuroMap: Recovering the Fourier Algorithm in Neural Networks
 
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Mechanistic Interpretability](https://img.shields.io/badge/MI-Mechanistic%20Interpretability-purple.svg)](https://www.neelnanda.io/mechanistic-interpretability)
+
 A mechanistic interpretability framework that reveals how neural networks internally compute modular arithmetic through Fourier-based algorithms. NeuroMap goes beyond visualization to provide **causal verification** that discovered structures are computationally meaningful.
 
 ![Pipeline Overview](screenshots/analysis/pipeline_overview.png)
@@ -290,7 +295,7 @@ This work builds on:
 ```bibtex
 @software{neuromap2024,
   title={NeuroMap: Recovering the Fourier Algorithm in Neural Networks},
-  author={Samuel Tchakwera},
+  author={Samuel T. Chakwera},
   year={2024},
   url={https://github.com/stchakwdev/NeuroMap}
 }

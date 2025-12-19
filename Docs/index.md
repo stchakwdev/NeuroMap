@@ -66,7 +66,7 @@ print(f"Accuracy drop: {result.accuracy_drop:.2%}")
 ```bibtex
 @software{neuromap2024,
   title={NeuroMap: Recovering the Fourier Algorithm in Neural Networks},
-  author={Samuel Tchakwera},
+  author={Samuel T. Chakwera},
   year={2024},
   url={https://github.com/stchakwdev/NeuroMap}
 }
